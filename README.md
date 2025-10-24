@@ -2,7 +2,6 @@
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Framework-009688?logo=fastapi)
-![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Status](https://img.shields.io/badge/Status-Learning%20In%20Progress-green)
 
 A personal learning repository by **Uday Senghani**, dedicated to exploring the **FastAPI** framework — one of the fastest-growing Python frameworks for modern backend and API development.  
