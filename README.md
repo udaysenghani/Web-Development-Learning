@@ -17,10 +17,7 @@ This repo includes hands-on examples, Python refreshers, and summarized notes to
 - [⚙️ Prerequisites](#️-prerequisites)
 - [🚀 Getting Started](#-getting-started)
 - [📚 Learning Outcomes](#-learning-outcomes)
-- [🔗 Resources](#-resources)
-- [🤝 Contributions](#-contributions)
 - [🧑‍💻 Author](#-author)
-- [📄 License](#-license)
 
 ---
 
@@ -36,15 +33,12 @@ This repository was created to:
 
 ## 📂 Repository Structure
 
-FastAPI-Learning/
-│
-├── Fast-API/ # Practical FastAPI projects and mini examples
-├── py refresher/ # Python syntax, modules, and OOP fundamentals
-├── Fast-API Basics.pdf # Summary notes of FastAPI concepts
-└── README.md # Project overview and setup guide
-
-yaml
-Copy code
+FastAPI-Learning/ 
+│ 
+├── Fast-API/ # Practical FastAPI projects and mini examples 
+├── py refresher/ # Python syntax, modules, and OOP fundamentals 
+├── Fast-API Basics.pdf # Summary notes of FastAPI concepts 
+└── README.md # Project overview and setup guide 
 
 ### Key Highlights
 - ✅ Modular code samples  
