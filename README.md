@@ -33,12 +33,12 @@ This repository was created to:
 
 ## 📂 Repository Structure
 
-FastAPI-Learning/ 
-│ 
-├── Fast-API/ # Practical FastAPI projects and mini examples 
-├── py refresher/ # Python syntax, modules, and OOP fundamentals 
-├── Fast-API Basics.pdf # Summary notes of FastAPI concepts 
-└── README.md # Project overview and setup guide 
+FastAPI-Learning/  
+│  
+├── Fast-API/ # Practical FastAPI projects and mini examples  
+├── py refresher/ # Python syntax, modules, and OOP fundamentals  
+├── Fast-API Basics.pdf # Summary notes of FastAPI concepts  
+└── README.md # Project overview and setup guide  
 
 ### Key Highlights
 - ✅ Modular code samples  
