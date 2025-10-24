@@ -89,7 +89,7 @@ Now open your browser and visit:
 👉 http://127.0.0.1:8000
 Interactive API docs available at:
 👉 http://127.0.0.1:8000/docs
-
+```
 📚 Learning Outcomes
 By exploring this repository, you’ll learn how to:
 
@@ -120,45 +120,8 @@ Explore Swagger & ReDoc auto-generated docs
 
 🧩 Uvicorn – ASGI server used to run FastAPI
 
-🤝 Contributions
-This is a learning-focused repository, but improvements are always welcome!
-You can:
-
-Add more examples or learning notes
-
-Fix typos or improve documentation
-
-Suggest project structure improvements
-
-Steps to contribute:
-
-bash
-Copy code
-# Fork the repo
-# Create a new branch
-git checkout -b feature/new-example
-
-# Commit your changes
-git commit -m "Added new FastAPI example"
-
-# Push and open a Pull Request
-git push origin feature/new-example
 🧑‍💻 Author
 Uday Senghani
 👨‍💻 Software Engineer | Backend & AI Enthusiast
 📍 India
-
-🔗 GitHub Profile
-
-📄 License
-This project is licensed under the MIT License — feel free to use and modify it.
-See the LICENSE file for details.
-
 "Code. Learn. Build. Repeat." 💡
-
-yaml
-Copy code
-
----
-
-Would you like me to also include a **“Future Enhancements”** section (e.g., database integration, 
