@@ -4,6 +4,7 @@ let firstpromise = new Promise((resolve, reject)=> {
 
     });
 
+
 // ----------------------- Promise Chaining Example -----------------------
 
 // Creating a promise that immediately resolves with value 10
@@ -17,8 +18,10 @@ let promise = new Promise((resolve, reject)=> {
     }
 });
 
+
+
 // Chaining multiple .then() calls
-promise1.then((message)=> {
+promise.then((message)=> {
     console.log("first msg:" + message);  // message = 10
     return 20;  // Passing 20 to the next .then()
 }).then((message)=> {
@@ -31,15 +34,19 @@ promise1.then((message)=> {
     console.error(error);
 }).finally((message) => {
     // Finally runs on resolve or reject — always executes
-    console.log("Main to final hu, chalunga pakka")
+    console.log("always execute")
 });
+
+
+
+
 
 
 // ----------------------- Promise.all Example -----------------------
 
 // promise1 resolves after 1 second
 let promise1 = new Promise((resolve, reject)=> {
-    setTimeout(resolve, 1000, "First");
+    setTimeout(resolve, 1000, "First"); 
 });
 
 // promise2 resolves after 2 seconds
