@@ -20,7 +20,7 @@ let promise = new Promise((resolve, reject)=> {
 
 
 
-// Chaining multiple .then() calls
+// Chaining multiple .then()
 promise.then((message)=> {
     console.log("first msg:" + message);  // message = 10
     return 20;  // Passing 20 to the next .then()
