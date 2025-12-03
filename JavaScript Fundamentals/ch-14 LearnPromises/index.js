@@ -46,7 +46,7 @@ promise.then((message)=> {
 
 // promise1 resolves after 1 second
 let promise1 = new Promise((resolve, reject)=> {
-    setTimeout(resolve, 1000, "First"); 
+    setTimeout(reject, 1000, "First"); 
 });
 
 // promise2 resolves after 2 seconds
@@ -60,7 +60,7 @@ let promise3 = new Promise((resolve, reject)=> {
 });
 
 // Promise.all waits for ALL promises
-// If ANY promise rejects → entire Promise.all rejects
+// If ANY promise rejects → entire Promise.all rejects <---
 Promise.all([promise3, promise2, promise1])
 .then((values) => {
     // This runs only if ALL promises resolve (not happening here)
