@@ -1,7 +1,7 @@
 //axios is better way of structure of fetch method 
 //internally the fetch method is working in axios
 
-//in axios we direct get the data we do not have to parse. 
+//in axios we direct get the data we do not have to json parse. 
 
 let url = "https://catfact.ninja/fact";
 
