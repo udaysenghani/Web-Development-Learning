@@ -58,11 +58,11 @@ app.use(express.json()); //to use get body data
 
 
 app.get("/read_all_books", (req, res) => {
-    res.send(books)
+    res.send(books);
 });
 
 app.get("/read_book_by_id/:id", (req, res) => {
-    let id = Number(req.params.id)
+    let id = Number(req.params.id);
     const found = books.find(book => book.id === id);
     if (found) {
         res.status(200).json(found);

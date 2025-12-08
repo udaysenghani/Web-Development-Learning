@@ -46,7 +46,7 @@ promise.then((message)=> {
 
 // promise1 resolves after 1 second
 let promise1 = new Promise((resolve, reject)=> {
-    setTimeout(reject, 1000, "First"); 
+    setTimeout(resolve, 1000, "First"); 
 });
 
 // promise2 resolves after 2 seconds

@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "figlet": "^1.9.4",
+    "random-words": "^2.0.1"
+  },
+  "name": "figlet",
+  "version": "1.0.0",
+  "description": "a figlet project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Uday Senghani",
+  "license": "ISC",
+  "type": "module"
+}
