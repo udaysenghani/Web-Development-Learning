@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Movie Explorer | Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-left">
+      <span class="logo"><i class="fa-solid fa-clapperboard"></i> Movie Explorer</span>
+    </div>
+    <nav class="nav-right">
+      <a href="index.html" class="active">Search</a>
+      <a href="watchlist.html">My Watchlist</a>
+      <a href="login.html" id="loginLink">Login</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Find your next movie</h1>
+      <p>Search using OMDb API and save movies to your personal watchlist.</p>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for a movie (e.g. OMG,laalo)" />
+        <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+      </div>
+      <small class="hint">Powered by OMDb API </small>
+    </section>
+
+    <section class="results-section">
+      <h2>Search Results</h2>
+      <div id="resultsContainer" class="movie-grid empty-state">
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Movie Explorer • Built with HTML, CSS, JS & Node.js</p>
+  </footer>
+
+  <script>
+    const OMDB_API_KEY = " http://www.omdbapi.com/?i=tt3896198&apikey=d980f080"; // 🔑 replace
+    const OMDB_BASE_URL = "https://www.omdbapi.com/";
+    const BACKEND_URL = "http://localhost:3000";
+
+    const searchInput = document.getElementById("searchInput");
+    const searchBtn = document.getElementById("searchBtn");
+    const resultsContainer = document.getElementById("resultsContainer");
+
+    searchBtn.addEventListener("click", () => {
+      const query = searchInput.value.trim();
+      if (!query) {
+        alert("Please enter a movie name");
+        return;
+      }
+      searchMovies(query);
+    });
+
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") searchBtn.click();
+    });
+
+    async function searchMovies(query) {
+      resultsContainer.classList.remove("empty-state");
+      resultsContainer.innerHTML = `<div class="loading">Searching movies...</div>`;
+
+      try {
+        const res = await fetch(`${OMDB_API_KEY}&s=${encodeURIComponent(query)}`);
+        const data = await res.json();
+
+        if (data.Response === "False" || !data.Search) {
+          resultsContainer.innerHTML = `<p class="error-text">${data.Error || "No results found."}</p>`;
+          return;
+        }
+
+        resultsContainer.innerHTML = "";
+        data.Search.forEach(movie => {
+          const posterUrl = movie.Poster && movie.Poster !== "N/A"
+            ? movie.Poster
+            : "https://via.placeholder.com/300x445?text=No+Image";
+
+          const card = document.createElement("div");
+          card.className = "movie-card";
+          card.innerHTML = `
+            <img src="${posterUrl}" alt="${movie.Title}">
+            <div class="movie-info">
+              <h3>${movie.Title}</h3>
+              <p>${movie.Year}</p>
+            </div>
+            <button class="btn-primary add-btn"
+              data-omdbid="${movie.imdbID}"
+              data-title="${movie.Title}"
+              data-poster="${posterUrl}"
+              data-year="${movie.Year}">
+              <i class="fa-solid fa-plus"></i> Add to Watchlist
+            </button>
+          `;
+          resultsContainer.appendChild(card);
+        });
+
+        attachAddListeners();
+      } catch (err) {
+        console.error(err);
+        resultsContainer.innerHTML = `<p class="error-text">Error fetching movies. Check console.</p>`;
+      }
+    }
+
+    function attachAddListeners() {
+      document.querySelectorAll(".add-btn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const movie = {
+            omdb_id: btn.dataset.omdbid,
+            title: btn.dataset.title,
+            poster_url: btn.dataset.poster,
+            year: btn.dataset.year
+          };
+
+          try {
+            const res = await fetch(`${BACKEND_URL}/api/movies/add`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify(movie)
+            });
+
+            if (res.status === 401) {
+              alert("Please login to add to watchlist.");
+              window.location.href = "login.html";
+              return;
+            }
+
+            const data = await res.json();
+            alert(data.message || "Done");
+          } catch (err) {
+            console.error(err);
+            alert("Error adding movie to watchlist.");
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html>

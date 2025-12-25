@@ -1,0 +1,85 @@
+<!-- <script src="assets/js/login.js"></script> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | Movie Explorer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="auth-body">
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2><i class="fa-solid fa-right-to-bracket"></i> Welcome back</h2>
+        <p>Login to continue to Movie Explorer.</p>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <label>Email</label>
+        <div class="input-group">
+          <i class="fa-solid fa-envelope"></i>
+          <input type="email" id="email" required placeholder="you@example.com" />
+        </div>
+
+        <label>Password</label>
+        <div class="input-group">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" id="password" required placeholder="••••••••" />
+        </div>
+
+        <button type="submit" class="btn-primary wide">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+        </button>
+      </form>
+
+      <p class="auth-footer-text">
+        New here? <a href="register.html">Create an account</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const BACKEND_URL = "http://localhost:3000";
+
+    const loginForm = document.getElementById("loginForm");
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!email || !password) {
+        alert("Please fill all fields.");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!data.success) {
+          alert(data.message || "Login failed.");
+          return;
+        }
+
+        alert("Login successful!");
+        window.location.href = "index.html";
+      } catch (err) {
+        console.error(err);
+        alert("Error logging in, check console.");
+      }
+    });
+  </script>
+</body>
+</html>

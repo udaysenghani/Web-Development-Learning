@@ -1,0 +1,168 @@
+<!-- <div id="watchlistContainer" class="movie-grid"></div>
+<script src="assets/js/watchlist.js"></script> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Watchlist | Movie Explorer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-left">
+      <span class="logo"><i class="fa-solid fa-clapperboard"></i> Movie Explorer</span>
+    </div>
+    <nav class="nav-right">
+      <a href="index.html">Search</a>
+      <a href="watchlist.html" class="active">My Watchlist</a>
+      <a href="login.html" id="loginLink">Login</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="page-header">
+      <h1>My Watchlist</h1>
+      <p>Movies you’ve saved from OMDb.</p>
+    </section>
+
+    <section class="results-section">
+      <div id="watchlistContainer" class="movie-grid empty-state">
+        <p>Loading your watchlist...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Movie Explorer</p>
+  </footer>
+
+  <script>
+    const BACKEND_URL = "http://localhost:3000";
+    const container = document.getElementById("watchlistContainer");
+
+    async function loadWatchlist() {
+      container.classList.remove("empty-state");
+      container.innerHTML = `<div class="loading">Fetching your watchlist...</div>`;
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/watchlist`, {
+          credentials: "include"
+        });
+
+        if (res.status === 401) {
+          alert("Please login to view your watchlist.");
+          window.location.href = "login.html";
+          return;
+        }
+
+        const data = await res.json();
+        if (!data.success) {
+          container.innerHTML = `<p class="error-text">${data.message || "Error loading watchlist."}</p>`;
+          return;
+        }
+
+        const items = data.data;
+        if (!items.length) {
+          container.classList.add("empty-state");
+          container.innerHTML = `<p>You have no movies in your watchlist yet. Go to <a href="index.html">Search</a> and add some!</p>`;
+          return;
+        }
+
+        container.innerHTML = "";
+        items.forEach(item => {
+          const card = document.createElement("div");
+          card.className = "movie-card";
+          const posterUrl = item.poster_url || "https://via.placeholder.com/300x445?text=No+Image";
+
+          card.innerHTML = `
+            <img src="${posterUrl}" alt="${item.title}">
+            <div class="movie-info">
+              <h3>${item.title}</h3>
+              <p>${item.year || "N/A"}</p>
+              <span class="status-pill ${item.status === "watched" ? "watched" : "pending"}">
+                ${item.status === "watched" ? "Watched" : "Pending"}
+              </span>
+            </div>
+            <div class="card-actions">
+              <button class="btn-secondary" onclick="toggleStatus(${item.watchlist_id}, '${item.status}')">
+                <i class="fa-solid fa-eye"></i> Toggle
+              </button>
+              <button class="btn-danger" onclick="deleteMovie(${item.watchlist_id})">
+                <i class="fa-solid fa-trash"></i> Remove
+              </button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = `<p class="error-text">Error loading watchlist. Check console.</p>`;
+      }
+    }
+
+    async function toggleStatus(id, currentStatus) {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/watchlist/toggle`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ watchlist_id: id, current_status: currentStatus })
+        });
+
+        if (res.status === 401) {
+          alert("Please login.");
+          window.location.href = "login.html";
+          return;
+        }
+
+        const data = await res.json();
+        if (!data.success) {
+          alert(data.message || "Failed to update status.");
+          return;
+        }
+
+        loadWatchlist();
+      } catch (err) {
+        console.error(err);
+        alert("Error updating status.");
+      }
+    }
+
+    async function deleteMovie(id) {
+      if (!confirm("Remove this movie from your watchlist?")) return;
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/watchlist/delete`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ watchlist_id: id })
+        });
+
+        if (res.status === 401) {
+          alert("Please login.");
+          window.location.href = "login.html";
+          return;
+        }
+
+        const data = await res.json();
+        if (!data.success) {
+          alert(data.message || "Failed to delete.");
+          return;
+        }
+
+        loadWatchlist();
+      } catch (err) {
+        console.error(err);
+        alert("Error deleting movie.");
+      }
+    }
+
+    loadWatchlist();
+  </script>
+</body>
+</html>
