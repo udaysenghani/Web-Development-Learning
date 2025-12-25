@@ -1,0 +1,41 @@
+<%- include("partials/header") %>
+<section class="hero">
+      <h1>Find your next movie</h1>
+      <p>Search using OMDb API and save movies to your personal watchlist.</p>
+      <div class="search-box">
+        <form action="/" method="get">
+          <div class="search-bar">
+            <input type="text" name="q" placeholder="Search for a movie (e.g. OMG,laalo)" />
+            <button type="submit">Search</button>
+          </div>
+        </form>
+      </div>
+      <small class="hint">Powered by OMDb API </small>
+</section>
+<section class="results-section">
+  <h3>Search Results</h3>
+  <div id="resultsContainer" class="movie-grid empty-state">
+  </div>
+</section>
+
+<div class="movie-grid">
+  <% movies.forEach(movie => { %>
+    <div class="movie-card">
+      <img src="<%= movie.Poster %>" />
+      <h5 style="padding-top: 8px;"><%= movie.Title %></h5>
+      <p>Year: <%= movie.Year %></p>
+      <p><%= movie.Type%></p>
+
+      <form action="/watchlist/add" method="POST">
+        <input type="hidden" name="title" value="<%= movie.Title %>">
+        <input type="hidden" name="year" value="<%= movie.Year %>">
+        <input type="hidden" name="poster" value="<%= movie.Poster %>">
+        <input type="hidden" name="imdb_id" value="<%= movie.imdbID %>">
+        <button type="submit">Add to Watchlist</button>
+      </form>
+    </div>
+  <% }) %>
+</div>
+
+
+<%- include("partials/footer") %>

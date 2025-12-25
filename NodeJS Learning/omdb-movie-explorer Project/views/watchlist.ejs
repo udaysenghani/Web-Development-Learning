@@ -1,0 +1,26 @@
+<%- include("partials/header") %>
+<section class="page-header">
+  <h2>My Watchlist</h2>
+  <p>Movies you've saved from OMDb.</p>
+</section>
+
+<div class="movie-grid">
+  <% movies.forEach(movie => { %>
+    <div class="movie-card">
+      <img src="<%= movie.poster %>" />
+      <h5 style="padding-top: 8px;"><%= movie.title %></h5>
+      <p>Year: <%= movie.year %></p>
+      <p><span class="badge rounded-pill text-bg-info" style="padding: 10px;"><%= movie.status%></span></p>
+
+      <form action="/watchlist/update/<%= movie.id %>" method="POST">
+        <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-eye"></i>Toggle</button>
+      </form>
+
+      <form action="/watchlist/delete/<%= movie.id %>" method="POST">
+        <button style="background:red;color:white;"><i class="fa-solid fa-trash"></i>Remove</button>
+      </form>
+    </div>
+  <% }) %>
+</div>
+
+<%- include("partials/footer") %>
