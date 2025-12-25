@@ -4,7 +4,7 @@ const pool = require("../db");
 
 const router = express.Router();
 
-function requireAuth(req, res, next) {
+function requireAuth(req, res, next) { //authorize in every request the user have the userid or not
   if (!req.session.userId) {
     return res.status(401).json({ success: false, message: "Not logged in" });
   }

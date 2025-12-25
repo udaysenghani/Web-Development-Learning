@@ -34,6 +34,14 @@ router.post("/login", async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).json({ success: false, message: "Invalid email or password" });
 
+
+
+    //Create session
+    /*
+       -> Browser auto-sends cookie
+       -> Express auto-loads session
+       -> You just check req.session.userId in every request
+     */
     req.session.userId = user.id;
     req.session.username = user.username;
     res.json({ success: true, message: "Logged in", user: { id: user.id, username: user.username } });
