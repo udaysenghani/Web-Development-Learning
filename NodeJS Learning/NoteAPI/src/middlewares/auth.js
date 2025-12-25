@@ -11,7 +11,7 @@ const auth = (req,res,next)=>{
             // console.log(req.userId);
         }
         else{
-            res.status(401).json({message : "Unauthorized user"});
+            return res.status(401).json({message : "Unauthorized user"});
         }
         next();
 

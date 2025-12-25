@@ -8,25 +8,23 @@ const mongoose = require('mongoose');
 
 app.use(express.json()); // body data parse to json
 
-app.use((req, res, next) => { //middleware // security guard that verifies the token
-   console.log("HTTP Method - " + req.method + ", URL -" + req.url);
-   next();
-});
+app.use("/user", userRouter);
+app.use("/note", noteRouter);
 
 app.get("/", (req, res) => {
-   res.status(200).send("hello");
+   res.status(200).send("NotesAPI");
 });
+
+const PORT = 3000;
 
 mongoose.connect("mongodb+srv://admin:admin@cluster0.szmysat.mongodb.net/?appName=Cluster0")
    .then(() => {
-      app.listen(3000);
+      app.listen(PORT);
    })
    .catch((err) => {
       console.log(err);
    })
 
-app.use("/user", userRouter);
-app.use("/note", noteRouter);
 
 
 
@@ -34,9 +32,8 @@ app.use("/note", noteRouter);
 
 
 
-// app.get("/quote",(req,res)=>{
-//     res.json(quotes);
-// });
+
+
 
 // app.get("/random",(req,res)=>{
 //     let index = Math.floor(Math.random()* quotes.length);
