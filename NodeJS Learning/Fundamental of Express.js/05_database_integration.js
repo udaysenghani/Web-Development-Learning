@@ -11,7 +11,7 @@ Connection stays open
 mongoose.connect('mongodb://localhost:27017/appdb');
 
 //for online database
-mongoose.connect("mongodb+srv://admin:admin@cluster0.szmysat.mongodb.net/?appName=Cluster0")
+mongoose.connect("remote-url")
    .then(() => {
       app.listen(PORT);
    })
