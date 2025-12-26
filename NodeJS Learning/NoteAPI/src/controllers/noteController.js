@@ -53,7 +53,7 @@ const getNote = async (req,res) =>{ //http://localhost:3000/note/
         const notes = await noteModel.find({userId : req.userId});
         res.status(200).json(notes);
     } catch (error){
-        console.l0g(error);
+        console.log(error);
         res.status(500).json({message: "Something Went Wrong"});
     }
 }

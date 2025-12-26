@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 
 const PORT = 3000;
 
-mongoose.connect("mongodb+srv://admin:admin@cluster0.szmysat.mongodb.net/?appName=Cluster0")
+mongoose.connect("")
    .then(() => {
       app.listen(PORT);
    })
