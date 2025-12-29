@@ -159,17 +159,3 @@ All endpoints are available under `http://localhost:3000/api` and expect/return 
 - For production, set secure cookie flags, move sensitive keys out of client-side code, and enable HTTPS.
 
 ---
-
-## 🛠️ Contributing
-
-Contributions are welcome. Open an issue or submit a PR with improvements.
-
----
-
-## 📄 License
-
-MIT
-
----
-
-If you'd like, I can also add a `.env.example` template, a database seed script, or improved environment-based configuration for the front-end OMDb key.
