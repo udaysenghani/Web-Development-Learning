@@ -1,19 +1,18 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Scope } from "@nestjs/common";
 
 interface User{
     name: string;
     age: number;
     id: number;
 }
-
-
-
-@Injectable() // the class is ready to use as dependancy
+// @Injectable() // by default in default scope
+// @Injectable({scope: Scope.REQUEST}) // the class is ready to use as dependancy
+@Injectable({scope: Scope.TRANSIENT})
 export class UsersStore {
   private store = new Map<number, User>();
 
-  constuctor(){
-    console.log("users.store.ts");
+  constructor(){
+    console.log("users store initiated");
   }
 
   addUser(user: User) {
